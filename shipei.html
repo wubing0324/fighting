@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>px</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <style type="text/css">
+      *{
+        margin: 0;
+        padding: 0;
+      }
+      .container1{
+        background: url(bg_03.jpg) no-repeat 0 0;
+        background-size: 100% 100%;
+        width: 7.5rem;
+        height: 11.71rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container1">
+          <div class="topBar">
+              <div class="icon"></div>
+              <a class="goHome"><i></i><span>进入官网</span></a>
+          </div>
+          <img src="file:///C:/Users/bing.wu1/Desktop/1.jpg" alt="" srcset="">
+            <a href="" class="goGame"></a>
+        </div>
+        <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js";></script>
+        <script>
+            var initScreen=function(){
+                  $("html").css("font-size", document.documentElement.clientWidth / 750 * 625 + "%");//动态计算font-size大小
+            }
+            $(function(){
+              setTimeout(function(){
+                initScreen();
+                window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function(e){initScreen(e);}, false);
+                //监测页面宽度的改变和横竖屏的变化，变化则调用initScreen
+              },100)
+            })
+        </script>
+  </body>
+</html>

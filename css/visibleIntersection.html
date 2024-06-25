@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .target {
+            margin: 5px;
+            width: 20px;
+            height: 20px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        const $container = document.getElementById("container");
+        const $targets = document.getElementsByClassName('target')
+
+        // 插入 100000 个 <div class="target"></div>
+        function createTargets() {
+            const htmlString = new Array(100000).fill('<div class="target"></div>').join("");
+            $container.innerHTML = htmlString;
+        }
+        createTargets()
+        const observer = new IntersectionObserver(getYellow, { threshold: 1.0 });
+        function getYellow(entries, observer) {
+            entries.forEach(entry => {
+                entry.target.style.backgroundColor = 'yellow'
+            });
+        }
+        Array.from($targets).forEach((element, index) => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>

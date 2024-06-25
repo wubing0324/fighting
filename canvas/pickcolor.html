@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <canvas id="canvas" width="600" height="300"></canvas>
+  <canvas id="canvas2" width="600" height="300"></canvas>
+  <script>
+    var canvas2 = document.getElementById("canvas2");
+    var ctx2 = canvas2.getContext("2d");
+    ctx2.font = "48px serif";
+    ctx2.textBaseline = "hanging";
+    ctx2.strokeText("Hello world", 0, 100);
+
+    var text = ctx2.measureText("Hello world");
+    console.log(text.width)
+    var img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = 'https://mdn.github.io/dom-examples/canvas/pixel-manipulation/assets/rhino.jpg';
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0);
+      img.style.display = 'none';
+    };
+    var hoveredColor = document.getElementById('hovered-color');
+    var selectedColor = document.getElementById('selected-color');
+
+
+    function pick(event, destination) {
+      var x = event.layerX;
+      var y = event.layerY;
+      var pixel = ctx.getImageData(x, y, 1, 1);
+      var data = pixel.data;
+
+      const rgba = `rgba(${data[0]}, ${data[1]}, ${data[2]}, ${data[3] / 255})`;
+      destination.style.background = rgba;
+      destination.textContent = rgba;
+
+      return rgba;
+    }
+
+    canvas.addEventListener('mousemove', function(event) {
+        pick(event, hoveredColor);
+    });
+    canvas.addEventListener('click', function(event) {
+        pick(event, selectedColor);
+    });
+  </script>
+</body>
+</html>

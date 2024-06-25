@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in list2">{{item}}</li>
+    </ul>
+  </div>
+<script>
+  var app = new Vue({
+    el: '#app',
+    data: {
+      list: [5,6,7,8],
+      list2: [{name: 'w', count: 0}]
+    },
+    mounted() {
+      this.list2[1] = {name: 'w1', count: 100}
+      this.list2.push({name: 'w2', count: 1000})
+      setInterval(() => {
+        this.list2[2].count++
+      }, 2000)
+    }
+  })
+</script>
+</body>
+</html>

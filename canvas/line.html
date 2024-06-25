@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let startX = 100;  // 起点X坐标
+        let startY = 100;  // 起点Y坐标
+        let endX = 700;    // 终点X坐标
+        let endY = 500;    // 终点Y坐标
+
+        let currentX = startX;
+        let currentY = startY;
+
+        const totalFrames = 100;  // 动画总帧数
+        let currentFrame = 0;
+
+        function drawLine() {
+            // 计算每一帧的增量
+            let deltaX = (endX - startX) / totalFrames;
+            let deltaY = (endY - startY) / totalFrames;
+
+            // 清除画布
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // 重新绘制线段
+            ctx.beginPath();
+            ctx.moveTo(startX, startY);
+            ctx.lineTo(currentX, currentY);
+            ctx.stroke();
+
+            // 更新当前坐标
+            currentX += deltaX;
+            currentY += deltaY;
+            currentFrame++;
+
+            // 判断是否完成动画
+            if (currentFrame <= totalFrames) {
+                requestAnimationFrame(drawLine);
+            } else {
+                // 确保最终坐标正确
+                ctx.lineTo(endX, endY);
+                ctx.stroke();
+            }
+        }
+
+        // 开始绘制
+        drawLine();
+
+    </script>
+</body>
+</html>

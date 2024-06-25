@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var arrs = [ [1, 2, 2], [3, 4, 5, 5], [6, 7, 8, 9, [11, 12, [12, 13, [14] ] ] ], 10];
+    var arr = []
+    function getLine(val){
+      if(Array.isArray(val)) {
+        val.forEach(k => {
+          var arr1 = getLine(k)
+          console.log(arr1)
+        })
+      } else {
+        arr.push(val)
+        return val
+      }
+    }
+    var s = getLine(arrs)
+    console.log(arr)
+
+  async function sleep(timer){
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('continue')
+      }, timer);
+    })
+  }
+  async function test(){
+    console.log('开始')
+    await sleep(5000)
+    console.log('结束')
+  }
+  test()
+  </script>
+</body>
+</html>

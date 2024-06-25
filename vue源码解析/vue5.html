@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <button @click="change">change{{message}}</button>
+    <button-counter></button-counter>
+  </div>
+<script>
+  Vue.component('button-counter', {
+    name: 'button-counter',
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+    mounted() {
+      var self = this
+    },
+  })
+  var app = new Vue({
+    name: 'appmain',
+    el: '#app',
+    data: {
+      message: 'Hello Vue!',
+    },
+    watch: {
+      message() {
+        console.log('我是message的watch')
+      }
+    },
+    mounted() {
+    },
+    methods: {
+      change () {
+        var self = this
+        this.message = 'Hello world!' + Math.random()
+      },
+    },
+  })
+</script>
+</body>
+</html>

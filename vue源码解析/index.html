@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- <p v-if="flag" v-for="item in obj">{{item}}</p> -->
+    <!-- {{obj.b}}
+    <span>{{obj.a}}</span> -->
+    <!-- <p>{{obj.d}}</p>
+    <p>{{obj.a}}</p>
+    <button @click="toggle">toggle</button> -->
+    {{sum}}
+  </div>
+<script>
+  Vue.component('button-counter', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+    mounted() {
+    },
+    methods: {
+      toParent() {
+        this.$emit('Child', 'I am child')
+      }
+    }
+  })
+  var app = new Vue({
+    el: '#app',
+    data: {
+      flag: true,
+      message1: 'hjhjk',
+      obj: {
+        a: 1,
+        b: 2
+      },
+      obj2: {
+        c:3
+      }
+    },
+    computed: {
+      sum() {
+        return this.obj.a + this.obj2.c
+      }
+    },
+    mounted() {
+      this.obj.d = 3
+      this.obj.child = {v: 888}
+      setTimeout(() => {
+        this.obj.d = 0
+        console.log(this.obj.d)
+      }, 5000)
+      setTimeout(() => {
+        this.obj.a = 1000000
+        console.log(this.obj.a)
+      }, 10000)
+    },
+    methods: {
+      getChild(val) {
+        console.log(val)
+      },
+      changeM() {
+        this.message1 = Math.random()
+      },
+      toggle () {
+        // this.flag = !this.flag
+        this.obj.a += 1
+        this.obj.d += 1
+      }
+    }
+  })
+
+  // 1.执行vue.js：
+  // 1)定义patch方法
+  // 2)定义mount方法，mount实际上定义了两次，执行时：先处理参数生成render，再调用render生成vnode，再patch生成dom
+  // 3)定义编译模板的方法createCompilerCreator
+
+  // 2.new Vue(options)，执行this._init方法
+  // 执行initRender生成vm._c
+  // 执行initState监听数据
+  // 调用mount解析模板生成render方法，定义updateComponent(调用render生成vnode，再调用patch(vnode)生成dom)
+  // new Watcher(),调用get方法
+  // 调用updateComponent,此时调用了数据的get方法，添加了依赖，在用vnode创建dom时，发现vnode是组件，于是再次解析模板，生成dom。这里有个子组件的构造函数，还没看
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <div v-html="dom"></div>
+  </div>
+  <p id="wen">
+    https://oaapp.geely.com/movie-park/frontdesk/#/article-details?subsId=C_000132&id=2255543913872909317&subsSendType=1&userId=152811hkjhjkhkjhkj
+  </p>
+  <script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+  <script>
+    var vue = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue.js!',
+        dom: ''
+      }
+    })
+    var p = document.getElementById('wen')
+    var str = p.innerHTML.replace(/^\s+|\s+$/g,"")
+    var tagAll = /<(a|img)\s*.*(\/)?>/g
+    var regHttp = /((http:\/\/|https:\/\/)((\w|=|\?|\.|\/|\&|-|\#)+))|(\w+\.(\w+)\.(com|cn|top))(\/?)/g;
+    var text = str.replace(tagAll, '$#$#').replace(/^\s+|\s+$/g,"")
+    var textArrs = text.split('$#$#')
+    var realHttpArrs = []
+    textArrs.forEach(k => {
+      var t = k.replace(/^\s+|\s+$/g,"")
+      var i = regHttp.test(t)
+      if (i) {
+        realHttpArrs.push(k)
+      }
+    })
+    realHttpArrs.forEach(k => {
+      var lianjie = k.replace(regHttp, function (match,param,offset,string) {
+        return '<a style="color: red" href="' + match + '">' + match + '</a>'
+      })
+      var reg = new RegExp(k,'g');
+      str = str.replace(reg, lianjie)
+    })
+    vue.dom = str
+  </script>
+</body>
+</html>

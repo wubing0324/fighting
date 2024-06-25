@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+  </div>
+<script>
+  let vm = new Vue({
+    el: '#app',
+    template: '<div>' +
+    '<p @click="change">按钮</p>' +
+    '<p>{{msg}}</p>' +
+    '</div>',
+    data() {
+      return {
+        title: '我是标题',
+        desc: '其它信息',
+        parentScope: 'parenttttt',
+        obj: {
+          name: 'wu'
+        }
+      }
+    },
+    computed: {
+      // async msg() {
+      //   let val = await this.getVal()
+      //   console.log(val)
+      //   return val
+      // }
+      msg() {
+        return this.obj.name
+      }
+    },
+    methods: {
+      getVal() {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            console.log('变化了')
+            resolve(this.title + '123456789456')
+          }, 0)
+        })
+      },
+      change() {
+        this.obj.name = Math.random()
+      }
+    },
+    mounted() {
+    },
+  })
+</script>
+</body>
+</html>

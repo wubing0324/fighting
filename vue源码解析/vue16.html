@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+  <!-- <script src="./vue-methods/stringifyClass.js"></script> -->
+</head>
+<body>
+  <div id="app">
+    <!-- <div v-if="flag" ref='message'>{{ message }}</div> -->
+    <!-- <div v-else>{{ randomNum }}</div> -->
+    
+    <!-- <button-counter></button-counter> -->
+    <!-- <ul>
+      <li v-for="(item, index) in datalist">{{item}}</li>
+    </ul> -->
+    <div @click="change">改变地址</div>
+    <div @click="change2">Object assign</div>
+    <div>
+      {{ch}}
+    </div>
+
+    <heading :level="1">456465</heading>
+    <heading :level="2">456465</heading>
+    <heading :level="3">456465</heading>
+  </div>
+<script>
+  Vue.component('heading', {
+    render: function (createElement) {
+      console.log(this.$slots.default)
+      return createElement(
+        'h' + this.level,   // 标签名称
+        this.$slots.default // 子节点数组
+      )
+    },
+    props: {
+      level: {
+        type: Number,
+        required: true
+      }
+    }
+  })
+  var app = new Vue({
+    el: '#app',
+    data: {
+      datalist: [],
+      ch: {a:'123', b: '456'}
+    },
+    mounted() {
+      this.gene()
+    },
+    methods: {
+      change() {
+        this.ch = {'a': 11, 'b': '99999'}
+        console.log(this.ch)
+        setTimeout(() => {
+          this.ch.a++
+        }, 2000)
+      },
+      change2() {
+        Object.assign(this.ch, {a: 'ddfdfff', b: 'lllll'})
+      },
+      gene() {
+        let data = []
+        for (let i = 0; i < 90000; i++) {
+          data.push({
+            name: i + 'w'
+          })
+        }
+        this.datalist = data
+      }
+    },
+  })
+</script>
+</body>
+</html>

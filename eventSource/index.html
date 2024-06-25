@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <button id="btn">发消息</button>
+  <script>
+  var source = new EventSource('http://10.200.150.254:11101/server-pc/adrest/eventsource')
+  // var source = new EventSource('http://10.200.146.80:8001/api/admin/EventSource-test')
+    source.onopen = function (event) { // 与服务器连接成功回调
+      console.log('成功与服务器连接')
+    }
+    // 监听从服务器发送来的所有没有指定事件类型的消息(没有event字段的消息)
+    source.onmessage = function (event) { // 监听未命名事件
+      console.log(event)
+      console.log("myEve", event.data)
+      let data = Math.random()
+    }
+    source.onerror = function (error) { // 监听错误
+      console.log(error)
+    }
+    var btn = document.getElementById('btn')
+    btn.onclick = function(){
+      // axios.post('http://10.200.146.80:8001/api/admin/addSourceEvent', {
+      axios.post('http://10.200.150.254:11101/server-pc/adrest/createTimer', {
+        id: Math.random(),
+        date: new Date()
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    }
+  </script>
+</body>
+</html>

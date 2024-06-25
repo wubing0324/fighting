@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 3840px;
+            height: 1360px;
+            border: 1px solid red;
+            position: relative;
+        }
+        #frame {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 0;
+        }
+        #btn {
+            position: absolute;
+            z-index: 1;
+            left: 100px;
+            top: 100px;
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <button id="btn">点击效果</button>
+        <iframe
+            id="frame"
+            src="https://example.org"
+            title="iframe Example 1"
+            width="3840"
+            height="1360">
+        </iframe>
+    </div>
+    <script>
+        const btn = document.getElementById('btn');
+        btn.onclick = function () {
+            alert('按钮被点击了');
+        }
+        frame.onmousemove = function (evt) {
+            console.log('evt = ', evt)
+        }
+    </script>
+</body>
+</html>

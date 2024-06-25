@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <input id="input" type="text">
+  <button id="btn">验证</button>
+  <script>
+    // 一位两位交替
+    var reg = /^(\s*\d{1}\s+\d{2}\s*(\d{1}\s*)?|\s*\d{2}\s+\d{1}\s*(\d{2}\s+)?)+$/
+
+    // 第一个是1位数 最后一个是1位数 中间是2位数
+    var reg2 = /^\s*\d{1}\s+(\d{2}\s+)+\d{1}\s*$/
+
+    // 第一位和最后一位是2位数 其他都是一位数 
+    var reg3 = /^\s*\d{2}\s+(\d{1}\s+)+\d{2}\s*$/
+
+    var reg4 = /^\s*\d{1}\s+\d{2}\s*(\d{1}\s*)$/
+    var reg5 = /^\s*\d{2}\s+\d{1}\s*(\d{2}\s*)$/
+    var input = document.getElementById('input')
+    var btn = document.getElementById('btn')
+    btn.onclick = function() {
+      var val = input.value
+      if (reg4.test(val)) {
+        console.log('是交替也是1 12 1')
+        return
+      }
+      if (reg4.test(val)) {
+        console.log('是交替也是12 1 12')
+        return
+      }
+      if (reg2.test(val)) {
+        console.log('1 12 12 1')
+      } else if (reg3.test(val)) {
+        console.log('12 1 1 12')
+      } else if (reg.test(val)) {
+        console.log('1 12 1 12')
+      } else {
+        console.log('都不是')
+      }
+    }
+  </script>
+</body>
+</html>

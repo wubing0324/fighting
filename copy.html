@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>copy</title>
+</head>
+<body>
+  <h2>深拷贝</h2>
+  <script src="./copy.js"></script>
+  <script>
+    var obj = {
+      'a': 1,
+      'b': 2,
+      'c': [4,5,6],
+      'd': {
+        'd1': [7,8,9],
+        'd2': {'d21': 10}
+      },
+      'e': null,
+      'f': undefined
+    }
+    var obj2 = [
+      1,2,3,4,
+      {
+        'a': 5,
+        'b': [6,7,8],
+        'c': {'c1': 9, 'c2': [10,11]}
+      }
+    ]
+    var objCopy = deepCopy(obj);
+    var obj2Copy = deepCopy(obj2);
+    console.log(objCopy);
+    console.log(obj2Copy);
+  </script>
+</body>
+</html>

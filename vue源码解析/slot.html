@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+  </div>
+<script>
+  let AppLayout = {
+    data() {
+      return {
+        slot_querys: '456789258',
+        msg1: '怕'
+      }
+    },
+    template: '<div class="container">' +
+    '<header><slot name="header" :slot_querys="slot_querys" :getVal="getVal"></slot></header>' +
+    '<main><slot>默认内容</slot></main>' +
+    '<footer><slot name="footer"></slot></footer>' +
+    '</div>',
+    methods: {
+      getVal() {console.log('123456789')}
+    },
+  }
+  let oPera = {
+    props:{
+      slot_querys: String,
+      getVal: Function,
+      parentScope: String
+    },
+    template: '<div>操作按钮{{slot_querys}}</div>',
+    mounted() {
+      console.log(this.slot_querys)
+      console.log(this.parentScope)
+    },
+  }
+
+  let vm = new Vue({
+    el: '#app',
+    template: '<div>' +
+    '<app-layout>' +
+    '<h1 slot="header" slot-scope="props"><oPera :parentScope="parentScope" :slot_querys="props.slot_querys"></oPera></h1>' +
+    '<p>{{msg}}</p>' +
+    '<p slot="footer">{{desc}}</p>' +
+    '</app-layout>' +
+    '</div>',
+    data() {
+      return {
+        title: '我是标题',
+        msg: '我是内容',
+        desc: '其它信息',
+        parentScope: 'parenttttt'
+      }
+    },
+    components: {
+      AppLayout,
+      oPera
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Popper Tutorial</title>
+    <style>
+      #container{
+        width: 50%;
+        margin: auto;
+        text-align: center;
+      }
+      #tooltip {
+        background: #333;
+        color: white;
+        font-weight: bold;
+        padding: 4px 8px;
+        font-size: 13px;
+        border-radius: 4px;
+        display: none;
+      }
+      #tooltip[data-show] {
+        display: block;
+      }
+      #arrow,
+      #arrow::before {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        z-index: -1;
+      }
+
+      #arrow::before {
+        content: '';
+        transform: rotate(45deg);
+        background: #333;
+      }
+      #tooltip[data-popper-placement^='top'] > #arrow {
+        bottom: -4px;
+      }
+
+      #tooltip[data-popper-placement^='bottom'] > #arrow {
+        top: -4px;
+      }
+
+      #tooltip[data-popper-placement^='left'] > #arrow {
+        right: -4px;
+      }
+
+      #tooltip[data-popper-placement^='right'] > #arrow {
+        left: -4px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <button id="button" aria-describedby="tooltip">My button</button>
+      <div id="tooltip" role="tooltip">
+        My tooltip
+        <div id="arrow" data-popper-arrow></div>
+      </div>
+    </div>
+
+    <script src="./popper.min.js"></script>
+    <script>
+      const button = document.querySelector('#button');
+      const tooltip = document.querySelector('#tooltip');
+
+      Popper.createPopper(button, tooltip, {
+        modifiers: [
+          {
+            name: 'offset',
+            options: {
+              offset: [0, 8],
+            },
+          },
+        ],
+      });
+      function show() {
+        tooltip.setAttribute('data-show', '');
+      }
+      function hide() {
+        tooltip.removeAttribute('data-show');
+      }
+      const showEvents = ['mouseenter', 'focus'];
+      const hideEvents = ['mouseleave', 'blur'];
+
+      showEvents.forEach(event => {
+        button.addEventListener(event, show);
+      });
+
+      hideEvents.forEach(event => {
+        button.addEventListener(event, hide);
+      });
+    </script>
+  </body>
+</html>

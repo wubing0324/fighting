@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <button id="btn1">第一个</button>
+  <button id="btn2">第二个</button>
+  <script>
+    let obj = {a:1}
+    let b1 = genaB(obj)
+    let b2 = genaB(obj)
+    btn1.onclick = function() {
+      b1()
+    }
+    btn2.onclick = function() {
+      b2()
+    }
+
+    function genaB(obj) {
+      let a = 0
+      return function setA(obj) {
+        obj.a++
+        console.log(obj.a)
+      }
+    }
+  </script>
+</body>
+</html>

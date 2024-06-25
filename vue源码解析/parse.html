@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="parse2.js"></script>
+  <script src="vuex.js"></script>
+  <style>
+    .polling_message {
+  color: white;
+  float: left;
+  margin-right: 2%;
+}
+
+.view_port {
+  background-color: black;
+  height: 25px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.cylon_eye {
+  background-color: red;
+  background-image: linear-gradient(to right,
+      rgba(0, 0, 0, .9) 25%,
+      rgba(0, 0, 0, .1) 50%,
+      rgba(0, 0, 0, .9) 75%);
+  color: white;
+  height: 50px;
+  width: 50px;
+  background: blue;
+
+  -webkit-animation: .8s linear 0s infinite alternate move_eye;
+          animation: .8s linear 0s infinite alternate move_eye;
+          -webkit-animation-iteration-count:6;
+}
+
+@-webkit-keyframes move_eye { from { background: yellow; } to { background: blue; }  }
+@keyframes move_eye { from { background: yellow; } to { background: blue; }  }
+  </style>
+</head>
+<body>
+  <div class="view_port">
+    <div class="polling_message">
+      Listening for dispatches
+    </div>
+    <div class="cylon_eye"></div>
+  </div>
+  <script>
+    var template1 = `<div class="class1 class2" id="app" @click="myclick"  @my-click="myClick" :testDyncAttr="testDyncAttr">
+    <!-- <div v-if="flag" ref='message'>{{ message }}</div> -->
+    <!-- <div v-else>{{ randomNum }}</div> -->
+    <button @click="change">change</button>
+    <button @click="toggle">toggle</button>
+    <!-- <button-counter></button-counter> -->
+    <ul>
+      <li v-for="(item, index) in datalist">{{item}}</li>
+    </ul>
+    </div>`
+    var template2 = `<div id="app">
+    <div class="class1 class2">
+      <p></p>
+      <br/>
+    </div>
+    <input/>
+    </div>`
+    let root = parse(template1.trim(), {shouldKeepComment: true})
+    console.log(root)
+  </script>
+
+  <div>
+    <p>
+      <span></span>
+    </p>
+    <p>
+      br/
+    </p>
+  </div>
+
+  stack[div, p, span,]
+  span结束
+  stack[div, p]
+  p结束
+  stack[div]
+  stack[div, p]
+  
+</body>
+</html>

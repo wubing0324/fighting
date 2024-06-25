@@ -1,0 +1,3 @@
+可以把原型链比作一个单向链表，next指针就是__proto__属性，
+每个对象都有一个__proto__属性，每个函数都有一个prototype属性，__proto__指向构造函数的prototype
+

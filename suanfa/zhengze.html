@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <table id="tb">
+    <tr><td>2018-10-26</td><td>
+                  <a>关于修改《中华人民共和国公司法》的决定</a>
+                </td><td> 2018-10-26
+                 </td>
+            </tr>
+  </table>
+  <input id="inp" type="text">
+  <script>
+    var table = document.getElementById('tb')
+    var str = table.innerHTML
+    str = str.replace(/\n|\r/g, '')
+    var reg = /<td.*?>.*?<\/td>/g
+    console.log(str.match(reg))
+
+    var inp = document.getElementById('inp')
+    inp.addEventListener('compositionstart', function(e) {
+      console.log('start')
+    });
+    document.addEventListener('compositionend', function(e) {
+      console.log('end')
+    });
+  </script>
+</body>
+</html>

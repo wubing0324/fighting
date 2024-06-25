@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    var hasHandler = {
+      has: function (target, key) {
+        var has = key in target;
+        if (!has) {
+          console.log('has没有啊')
+        }
+        console.log('has')
+        return has
+      }
+    };
+
+    var getHandler = {
+      get: function get (target, key) {
+        if (typeof key === 'string' && !(key in target)) {
+          console.log('get没有啊')
+        }
+        console.log('get')
+        return target[key]
+      }
+    };
+    var vm = {
+      'a': 1,
+      'b': 2
+    }
+  
+    var vm1 = new Proxy(vm, hasHandler);
+    console.log('a' in vm1)
+
+    // var vm1 = new Proxy(vm, getHandler);
+    // console.log(vm1.a)
+    
+    // for(var i in vm) {
+    //   vm.has(i)
+    // }
+
+    // let handler = {
+    //     get: function(target, name){
+    //         return name in target ? target[name] : 37;
+    //     }
+    // };
+
+    // let p = new Proxy({}, handler);
+
+    // p.a = 1;
+    // p.b = undefined;
+
+    // console.log(p.a, p.b);
+
+    // console.log('c' in p, p.c);
+
+  </script>
+</body>
+</html>

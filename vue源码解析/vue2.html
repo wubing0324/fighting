@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <div v-if="flag" ref='message'>{{ message }}</div>
+    <button @click="toggleFun">toggle</button>
+    <button-counter @tellparent='parentFun'></button-counter>
+  </div>
+  <script>
+    Vue.component('button-counter', {
+    data: function () {
+      return {
+        count: 0
+      }
+    },
+    template: '<button v-on:click="childTellParent">You clicked me {{ count }} times.</button>',
+    mounted() {
+      var self = this
+      setTimeout(function(){
+        self.count = 1000
+      }, 2000)
+    },
+    methods: {
+      childTellParent() {
+        this.count++
+        this.$emit('tellparent')
+      }
+    }
+  })
+  var app = new Vue({
+    el: '#app',
+    data: {
+      message: 'Hello Vue!',
+      opsa: {
+        a: 2
+      },
+      randomNum: Math.random(),
+      flag: true,
+    },
+    methods: {
+      parentFun() {
+        console.log('i am parent')
+      },
+      change () {
+        var self = this
+        this.message = 'Hello world!'
+        console.log('同步 ' + this.$refs.message.innerText)
+        this.$nextTick(function(){
+          console.log('nexttick ' + this.$refs.message.innerText)
+        })
+      },
+      toggleFun () {
+        this.flag = !this.flag
+        this.message = 'Hello world!3232323232323232323'
+      }
+    },
+  })
+  </script>
+</body>
+</html>

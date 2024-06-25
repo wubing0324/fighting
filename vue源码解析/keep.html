@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+  </div>
+  <script>
+  let A = {
+    template: '<div class="a">' +
+    '<p>A Comp {{count}}</p>' +
+    '</div>',
+    name: 'A',
+    data() {
+      return {
+        count: 0,
+        timer: 0
+      }
+    },
+    mounted() {
+      this.timer = setInterval(() => {
+        if (this.count > 10) {
+          clearInterval(this.timer)
+        }
+        console.log('A = ', this.count++)
+      },1000)
+    }
+  }
+
+  let B = {
+    template: '<div class="b">' +
+    '<p>B Comp {{count}}</p>' +
+    '</div>',
+    name: 'B',
+    data() {
+      return {
+        count: 500
+      }
+    },
+    mounted() {
+      setInterval(() => {
+        console.log('B = ', this.count++)
+      },1000)
+    }
+  }
+
+  let vm = new Vue({
+    el: '#app',
+    template: '<div>' +
+    '<keep-alive>' +
+    '<component :is="currentComp">' +
+    '</component>' +
+    '</keep-alive>' +
+    '<button @click="change">switch</button>' +
+    '</div>',
+    data: {
+      currentComp: 'A'
+    },
+    methods: {
+      change() {
+        this.currentComp = this.currentComp === 'A' ? 'B' : 'A'
+      }
+    },
+    components: {
+      A,
+      B
+    }
+  })
+  </script>
+</body>
+</html>

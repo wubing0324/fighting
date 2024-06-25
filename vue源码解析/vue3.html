@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <input/>
+    <!-- <div v-if="flag" ref='message'>{{ message }}</div> -->
+    <!-- <div v-else>{{ randomNum }}</div> -->
+    <button @click="change">change</button>
+    <button @click="toggle">toggle123</button>
+    {{message}}
+    {{countAll}}
+    <!-- <button-counter></button-counter> -->
+    <ul>
+      <li v-for="(item, index) in datalist">{{item}}</li>
+    </ul>
+  </div>
+<script>
+  let globalData = {name: 'wb'}
+  Vue.component('button-counter', {
+    data: function () {
+      return {
+        count: 0,
+        count2: 1
+      }
+    },
+    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+    mounted() {
+      var self = this
+      setTimeout(function(){
+        self.count = 1000
+      }, 2000)
+    },  
+  })
+  var app = new Vue({
+    el: '#app',
+    data: {
+      globalData: globalData,
+      message: 'Hello Vue!',
+      opsa: {
+        a: 2
+      },
+      randomNum: Math.random(),
+      flag: true,
+      list: [1,2,3,4],
+      list2: [5,6,7,8],
+      datalist: []
+    },
+    watch: {
+      message() {
+        console.log('变了')
+      },
+      testNot() {
+        console.log('testNot变了')
+      }
+    },
+    computed: {
+      countAll() {
+        return this.message + this.flag
+      }
+    },
+    mounted() {
+      this.testNot = '45646546'
+      this.datalist = this.list
+      setTimeout(() => {
+        globalData.name = 'wwwwwwwwwwwb'
+      }, 2000)
+    },
+    methods: {
+      change () {
+        var self = this
+        this.message = 'Hello world!'
+        this.testNot = '0000000000000000000'
+        console.log(this.testNot)
+        // console.log('同步 ' + this.$refs.message.innerText)
+        // this.$nextTick(function(){
+        //   console.log('nexttick ' + this.$refs.message.innerText)
+        // })
+      },
+      toggle () {
+        this.flag = !this.flag
+        // this.message = 'Hello world!3232323232323232323'
+        if (this.flag) {
+          this.datalist = this.list
+        } else {
+          this.datalist = this.list2
+        }
+      }
+    },
+  })
+</script>
+</body>
+</html>

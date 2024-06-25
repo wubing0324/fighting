@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>defineproperty</title>
+</head>
+<body>
+  <script>
+    var noop = function(){}
+    var sharedPropertyDefinition = {
+      enumerable: true,
+      configurable: true,
+      get: noop,
+      set: noop
+    };
+    function proxy (target, sourceKey, key) {
+      sharedPropertyDefinition.get = function proxyGetter () {
+        return this[sourceKey][key]
+      };
+      sharedPropertyDefinition.set = function proxySetter (val) {
+        this[sourceKey][key] = val;
+      };
+      Object.defineProperty(target, key, sharedPropertyDefinition);
+    }
+    function Vue (options) {
+      if (!(this instanceof Vue)
+      ) {
+        warn('Vue is a constructor and should be called with the `new` keyword');
+      }
+      this._init(options);
+    }
+    Vue.prototype._init = function(options){
+      var vm = this;
+      vm.$options = options
+      initState(vm)
+    }
+    function initState(vm) {
+      if (vm.$options.data) {
+        initData(vm);
+      }
+    }
+    function initData(vm){
+      var data = vm.$options.data;
+      data = vm._data = typeof data === 'function'
+        ? getData(data, vm)
+        : data || {};
+      var keys = Object.keys(data);
+      var i = keys.length
+      while(i--){
+        var key  = keys[i]
+        proxy(vm, '_data', key)
+      }
+      console.log(vm)
+    }
+
+    function getData (data, vm) {
+      return data.call(vm, vm)
+    }
+
+
+
+    var app = new Vue({
+      el: '#app',
+      data: {
+        message: 'Hello Vue!'
+      }
+    })
+  </script>
+</body>
+</html>

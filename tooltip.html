@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    .ulBox{
+      overflow: hidden;
+      border: 1px solid blue;
+    }
+    .tooltip{
+      position: absolute;
+      width: 200px;
+      height: 500px;
+      border: 1px solid red;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+  <ul class="ulBox">
+    <li>更多1</li>
+    <li>更多2</li>
+    <li>更多3</li>
+    <li>更多4</li>
+    <li>更多5</li>
+    <li>更多6</li>
+  </ul>
+  <div class="tooltip">
+
+  </div>
+  <script>
+    $('.ulBox li').mouseenter(function(e){
+      console.log(e.target)
+      console.log('-----------------------')
+    })
+    $('.ulBox li').mouseleave(function(e){
+      console.log(e.target)
+    })
+  </script>
+</body>
+</html>
