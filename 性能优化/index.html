@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- <script defer src="https://javascript.info/article/script-async-defer/long.js"></script>
+  <script defer src="https://javascript.info/article/script-async-defer/small.js"></script> -->
+<script>
+  let test = document.getElementById('test')
+  console.log('test = ', test)
+</script>
+</head>
+<body>
+  <div id="test">jhkhjklhjkhjk</div>
+  <div>jhkhjklhjkhjk</div>
+  <div>jhkhjklhjkhjk</div>
+  <div>jhkhjklhjkhjk</div>
+  <div>jhkhjklhjkhjk</div>
+  <div>jhkhjklhjkhjk11111</div>
+  <script>
+    let i = 0
+    while(i < 100000){
+      i++
+    }
+    let test1 = document.getElementById('test')
+    console.log('test1 = ', test1)
+  </script>
+  <!-- <script defer src="./index.js"></script> -->
+  <script>
+    // document.addEventListener('DOMContentLoaded', () => alert("DOM fully loaded and parsed after defer!"));
+  </script>
+</body>
+</html>
