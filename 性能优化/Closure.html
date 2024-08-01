@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="dd">点击</div>
+    <script>
+        function createLargeClosure() {
+            var largeStr = new Array(1000000).join('x');
+
+            var lC = function lC() { // this IS a named function
+                console.log('123')
+                return largeStr;
+            };
+
+            return lC;
+        }
+        let fn = createLargeClosure()
+        let dd = document.getElementById('dd')
+        var arr = []
+        dd.addEventListener('click', () => {
+            arr.push(createLargeClosure()())
+        });
+    </script>
+</body>
+</html>

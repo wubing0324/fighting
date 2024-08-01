@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tab Navigation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'UserManagement')">用户管理</button>
+        <button class="tablinks" onclick="openTab(event, 'ConfigManagement')">配置管理</button>
+        <button class="tablinks" onclick="openTab(event, 'RoleManagement')">角色管理</button>
+        <button class="tablinks" onclick="openTab(event, 'TaskScheduling')">定时任务补偿</button>
+    </div>
+
+    <div id="UserManagement" class="tabcontent">
+        <h3>用户管理</h3>
+        <p>用户管理内容</p>
+    </div>
+
+    <div id="ConfigManagement" class="tabcontent">
+        <h3>配置管理</h3>
+        <p>配置管理内容</p>
+    </div>
+
+    <div id="RoleManagement" class="tabcontent">
+        <h3>角色管理</h3>
+        <p>角色管理内容</p>
+    </div>
+
+    <div id="TaskScheduling" class="tabcontent">
+        <h3>定时任务补偿</h3>
+        <p>定时任务补偿内容</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

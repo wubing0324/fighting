@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="ulid"></ul>
+    <button id="grow">点击</button>
+    <button id="grow2">回收</button>
+    <button id="create">分离</button>
+    <div id="content"></div>
+    <script>
+        // var arr = []
+        class testObj{
+            constructor (name, age, sex) {
+            this.name = name
+            this.age = age
+            this.sex = sex
+        }
+        }
+        // setInterval(() => {
+        //     let li = document.createElement('li')
+        //     li.innerHTML = 'k'
+        //     ul.appendChild(li)
+        //     // arr.push(new fun(23,32,'fdsfdsfdsfdsfdfs'))
+        //     arr.push(new Array(1000000).join('x'));
+        // }, 1000)
+
+        var x = [];
+        let content =document.getElementById('content')
+        var fragment = document.createDocumentFragment();
+        function grow() {
+            for (var i = 0; i < 10000; i++) {
+                fragment.appendChild(document.createElement('div'));
+                x.push(new testObj(23,32,'fdsfdsfdsfdsfdfs'))
+            }
+            content.appendChild(fragment)
+            // x.push(new Array(1000000).join('x'));
+        }
+
+        document.getElementById('grow').addEventListener('click', grow);
+        document.getElementById('grow2').addEventListener('click', grow2);
+        function grow2() {
+            // x = []
+            content.innerHTML = ''
+        }
+
+        var detachedTree;
+
+        function create() {
+            var ul = document.createElement('ul');
+            for (var i = 0; i < 100; i++) {
+                var li = document.createElement('li');
+                ul.appendChild(li);
+            }
+            detachedTree = ul;
+        }
+
+        document.getElementById('create').addEventListener('click', create);
+
+    </script>
+</body>
+</html>

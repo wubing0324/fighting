@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        li{
+            height: 50px;
+            border: 1px solid red;
+            content-visibility: auto;
+        }
+    </style>
+</head>
+<body>
+    <ul id="my-ul"></ul>
+    <script>
+        let ul = document.getElementById('my-ul')
+        var fragment = document.createDocumentFragment();
+        for (let i = 0; i < 10000; i++) {
+            var li = document.createElement("li");
+            li.textContent = i + '---- 尽快了解离开家刻录机刻录机刻录机看见了铝合金户籍科户籍科后即可很快就很快就很快就很快就很快就很快就会可见很快就很快就和';
+            fragment.appendChild(li);
+        }
+        ul.appendChild(fragment);
+    </script>
+</body>
+</html>

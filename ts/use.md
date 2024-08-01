@@ -19,6 +19,8 @@ typeof的作用：
 1.在值中使用，就是判断类型
 2.在类型上下文中使用（type）中使用
 在类型上下文中，typeof 操作符用于获取变量或属性的类型，以便在声明其他类型时复用已有类型。这在 TypeScript 中非常有用，因为它允许你基于现有变量或对象的类型定义新的类型。
+>用现有数据创建类型，可以用于定义接口返回的对象
+
 ```javascript
 let user = {
     name: "Alice",
@@ -39,6 +41,28 @@ let newUser: UserType = {
 
 greetUser(newUser);
 
+```
+>但是，在某些情况下，你可能只关心对象中的某些关键属性，而不需要对整个对象进行严格的类型定义。这时，你可以显式地定义关键属性，并使用索引签名来处理其他属性。这样可以保证你关心的关键属性类型正确，同时允许对象包含其他属性。
+
+```javascript
+interface PartialResponseType {
+  id: number;
+  name: string;
+  [propName: string]: any;
+}
+
+const response: PartialResponseType = {
+  id: 1,
+  name: "Alice",
+  age: 30, // 其他属性可以是任意类型
+  address: "123 Main St"
+};
+
+const anotherResponse: PartialResponseType = {
+  id: 2,
+  name: "Bob",
+  email: "bob@example.com"
+};
 ```
 
 typeof和keyof可以配合使用
@@ -138,3 +162,65 @@ type SettingsStoreKey = keyof LayoutSettings;
 
 type和interface的区别
 https://github.com/SunshowerC/blog/issues/7
+
+
+##### InstanceType
+当你有一个构造函数类型，并且你想要获取这个构造函数创建的实例的类型时，可以使用 InstanceType。
+
+假设我们有一个类 Person，我们想要获取它的实例类型：
+```javascript
+class Person {
+  name: string;
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+// 使用 InstanceType 获取 Person 的实例类型
+type PersonInstance = InstanceType<typeof Person>;
+
+const person: PersonInstance = new Person("Alice");
+console.log(person.name); // 输出: Alice
+```
+>type PersonInstance = typeof Person,这么些是不对的，typeof Person获取的是构造函数的类型，
+```javascript
+// 使用 typeof 获取构造函数的类型
+type PersonConstructorType = typeof Person;
+
+// 直接使用 typeof 不能获取实例的类型，只能获取构造函数的类型
+const anotherPerson: PersonConstructorType = Person; // 这是正确的
+// const invalidPerson: PersonConstructorType = new Person("Bob"); // 这是错误的
+```
+
+##### 为什么需要 InstanceType
+使用 InstanceType 的主要原因是：
+
+1. 类型推断：在某些情况下，我们可能只知道构造函数的类型，但需要推断出实例类型。这时，InstanceType 就派上了用场。
+2. 类型安全：通过显式地使用 InstanceType，我们可以确保类型定义和实例类型一致，避免类型错误。
+总结来说，typeof 用于获取构造函数类型，而 InstanceType 用于从构造函数类型中获取实例类型。两者结合使用可以更好地进行类型推断和确保类型安全。
+
+##### ReturnType
+ReturnType 是 TypeScript 的一个内置工具类型，用于获取函数类型的返回值类型。它在类型推断和确保类型安全方面非常有用。
+```javascript
+function getUser() {
+  return {
+    id: 1,
+    name: "Alice",
+    age: 30
+  };
+}
+
+// 使用 ReturnType 获取 getUser 函数的返回值类型
+type UserType = ReturnType<typeof getUser>;
+
+const user: UserType = {
+  id: 2,
+  name: "Bob",
+  age: 25
+};
+
+console.log(user); // 输出: { id: 2, name: "Bob", age: 25 }
+```
+注意事项
+ReturnType 只能用于获取函数类型的返回值类型，如果你传递的类型不是函数类型，则会产生编译错误。
+ReturnType 对于复杂的函数返回类型（如嵌套对象或泛型）仍然适用，可以正确推断出返回类型。

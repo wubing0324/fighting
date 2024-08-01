@@ -9,7 +9,7 @@
  * koroFileheader VSCode插件
  * Copyright (c) 2021 by OBKoro1, All Rights Reserved.
  */
-
+const treeJson = require('./tree.json')
 // 源数据
 const list = [
     {
@@ -69,7 +69,6 @@ const dataToTree = (source) => {
         src[id] = source[i]
     }
 
-    console.log(tree)
     Object.keys(src).forEach(id => {
         let parentId = src[id].parentId
         if (src[parentId]) {
@@ -89,4 +88,4 @@ const dataToTree = (source) => {
     console.log(JSON.stringify(tree, null, 4))
     
 }
-dataToTree(list)
+dataToTree(treeJson.data)
