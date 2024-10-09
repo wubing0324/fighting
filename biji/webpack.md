@@ -44,7 +44,7 @@ module.exports={
 先说创建module的过程：
 module是什么？module和文件是对应的，例如index.js会有一个module对象，index.less也会有一个
 根据文件路径创建module，在创建module之前会先准备好解析这个文件的loader，解析对应loader和创建module的过程在 NormalModuleFactory.js中：
-关键的两个方法：factory和resdolver，
+关键的两个方法：factory和resolver，
 + resolver负责解析该文件需要使用的loader。详情：根据文件路径，先解析出其中的内联loader的绝对路径和文件信息，然后创建ruleset对象result，遍历result根据文件后缀匹配出对应的loader，并根据enforce对loader进行分类并存储到相应的数组中,最后解析出loader的绝对路径，并按[post,inline,normal,pre]的顺序拼接loaders = results[0].concat(loaders, results[1], results[2]);拿到最终的loader数组。
 >整体过程是：解析index.js，生成index.js对应的loader，其中根据'./index.js'路径解析出来的inline-loader为空，生成loaders,然后创建module，执行run-loader，用解析出来的loader翻译index.js，翻译完成后，将结果通过ast翻译生成ast树，查找其中的require节点，找出index.js的依赖（index.less），递归创建module的过程。执行index.less的module创建过程。直到这一过程，会去解析'style-loader!./index.less'，找到他的内联loader和其他loader。
 

@@ -26,6 +26,7 @@ function grow() {
     }
     content.appendChild(fragment)
 }
+document.getElementById('grow').addEventListener('click', grow);
 ```
 1) Summary
 ![image.png](./images/summary.png)

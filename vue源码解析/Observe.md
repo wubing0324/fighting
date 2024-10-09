@@ -15,7 +15,9 @@ walk(data)
 + 当数组元素为对象时，要监听这个对象的变化，于是给这个对象添加__ob__对象，如果已经有该对象，直接返回，说明已经为这个对象的属性设置了get和set方法，没有，则拿这个对象创建ob对象，执行walk为对象的每个可枚举属性添加get和set方法
 例子：[{a:1},{a:2}]或原始数据类型:6
 
-```
+![avatar](./arrayproto.png)
+
+```javascript
 var arrayProto = Array.prototype;
 var arrayMethods = Object.create(arrayProto);
 

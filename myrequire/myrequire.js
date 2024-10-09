@@ -3,7 +3,7 @@ let fs = require('fs')
 let vm = require('vm')
 function Module(id) {
     this.id = id
-    this.exports = exports
+    this.exports = {}
 }
 
 Module.load = function(filepath) {

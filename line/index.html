@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="./draw.js"></script>
+</head>
+
+<body>
+  <canvas id="can" width="600px" height="600px" style="border:1px solid #000000;"></canvas>
+  <button id="add">新增</button>
+  <button id="paint">绘制</button>
+  <script>
+    var canvas = document.getElementById("can");
+    var ctx = canvas.getContext("2d");
+    var mouseIndex = [];
+    let lineSmoothness = 0.4
+    // getPoint()
+    var activeLine = []
+    var lines = {}
+    var id = 0
+
+    var add = document.getElementById('add')
+    var paint = document.getElementById('paint')
+    add.addEventListener('click', function () {
+      getPoint()
+      id++
+      lines[id] = {
+        points: [],
+        reacts: [],
+        activeId: id
+      }
+      activeLine = lines[id]
+      canvas.removeEventListener("click", editLine);
+    })
+    paint.addEventListener('click', draw)
+    function getPoint() {
+      canvas.addEventListener("mousedown", canvasDown, false);
+      // canvas.addEventListener("click", editLine, false);
+    }
+    function editLine(evt) {
+      let pos = getPosition(evt)
+      let x = pos.x
+      let y = pos.y
+      let lineIndex = 0
+      for (var i = 1; i <= id; i++) {
+        // ctx.clearRect(0, 0, 600, 600);
+        lineIndex = drawPointsSmoothLineFake(ctx, lines[i].points, lineSmoothness, pos)
+        if (lineIndex) {
+          lineIndex = i
+          console.log(lineIndex)
+          activeLine = lines[i]
+          drawPointsInLine(x, y)
+          canvas.addEventListener("mousedown", canvasDown, false);
+          canvas.removeEventListener("click", editLine);
+          break
+        }
+      }
+
+    }
+    function draw() {
+      activeLine = null
+      ctx.clearRect(0, 0, 600, 600);
+      Object.keys(lines).forEach(key => {
+        fourLineTo(ctx, lines[key].points, lineSmoothness)
+      })
+      canvas.addEventListener("click", editLine, false);
+      canvas.removeEventListener("mousedown", canvasDown);
+    }
+
+    function canvasDown(evt) {
+      // getposition
+      let pos = getPosition(evt)
+      let x = pos.x
+      let y = pos.y
+
+      // hasPoint
+      let curIndex = hasPoint(x, y)
+      if (curIndex > -1) {
+        // 是已经存在的点，移动
+        mouseIndex = []; //保存点击事件包含图形的index值
+        mouseIndex.push(curIndex);
+        canvas.addEventListener("mousemove", canvasMove, false);
+        canvas.addEventListener("mouseup", canvasUp, false);
+      } else {
+        // 新建一个点
+        mouseIndex = [];
+        console.log('xinzeng')
+        drawPoint(x, y);
+        activeLine.points.push({
+          "x": x,
+          "y": y
+        })
+        // fourLineTo(ctx, activeLine, lineSmoothness)
+        // delNum += 1;
+        // if (canType == "线" && delNum == 2) {
+        //   lineTo();
+        // }
+        // fourLineTo()
+      }
+    }
+    function hasPoint(x, y) {
+      let curIndex = -1
+
+      for (var i = 0; i < activeLine.points.length; i++) {
+        drawPointCircle(activeLine.points[i].x, activeLine.points[i].y);
+
+        if (ctx.isPointInPath(x, y)) {
+          curIndex = i;
+          console.log("点击了第" + (curIndex + 1) + "个点。");
+          // break;
+        }
+      }
+      return curIndex
+    }
+    function getPosition(evt) {
+      var x = evt.clientX;
+      var y = evt.clientY;
+      var rect = canvas.getBoundingClientRect();
+      x -= rect.left;
+      y -= rect.top;
+      return { x: x, y: y }
+    }
+
+    //画点
+    function drawPoint(x, y) {
+      // ctx.beginPath();
+      // ctx.strokeStyle = "red";
+      // ctx.fillStyle = "red";
+      // ctx.arc(x, y, 10, 0, 2 * Math.PI);
+      // ctx.stroke();
+      ctx.beginPath();
+      ctx.strokeStyle = "red";
+      ctx.rect(x - 2, y - 2, 4, 4);
+      ctx.stroke();
+      ctx.closePath();
+    }
+    function drawPointsInLine(x, y) {
+      let curIndex = -1
+      for (var i = 0; i < activeLine.points.length; i++) {
+        drawPoint(activeLine.points[i].x, activeLine.points[i].y);
+
+        if (ctx.isPointInPath(x, y)) {
+          curIndex = i;
+          console.log("点击了第" + (curIndex + 1) + "个点。");
+          // break;
+        }
+      }
+      return curIndex
+    }
+    function drawPointCircle(x, y) {
+      ctx.beginPath();
+      ctx.strokeStyle = "transparent";
+      ctx.arc(x, y, 10, 0, 2 * Math.PI);
+      ctx.closePath();
+      // ctx.beginPath();
+      // ctx.strokeStyle = "red";
+      // ctx.rect(x - 2, y - 2, 4, 4);
+      // ctx.stroke();
+    }
+
+    function canvasUp(e) {
+      canvas.removeEventListener("mousemove", canvasMove, false);
+    }
+
+    function canvasMove(evt) {
+      let pos = getPosition(evt)
+      let x = pos.x
+      let y = pos.y
+      console.log("移动后的新位置", x, y);
+      activeLine.points[mouseIndex[0]].x = x;
+      activeLine.points[mouseIndex[0]].y = y;
+      ctx.clearRect(0, 0, 600, 600);
+      for (var i = 0; i < activeLine.points.length; i++) {
+        ctx.beginPath();
+        ctx.strokeStyle = "red";
+        ctx.rect(activeLine.points[i].x - 2, activeLine.points[i].y - 2, 10, 10);
+        ctx.stroke();
+        ctx.closePath();
+      }
+      Object.keys(lines).forEach(key => {
+        fourLineTo(ctx, lines[key].points, lineSmoothness)
+      })
+      // fourLineTo(ctx, activeLine, lineSmoothness)
+    }
+  </script>
+</body>
+
+</html>

@@ -70,7 +70,7 @@ function createComputedGetter (key) {
       if (watcher.dirty) {
         watcher.evaluate();
       }
-      // 执行顺序是：lazy watcher， user watcher， render watcher，
+      // 执行顺序是：lazy watcher（计算属性）， user watcher（watch）， render watcher，
       // 原因：在flushquene中会用watcher.id去从小到大排序，然后依次执行，watcher的创建顺序是lazy，user，render
       // 之后每次取值所做的只是将依赖属性的dep和此watcher互相关联,
       // 在dep触发notify更新的时候,会遍历subs,拿到这个watcher,执行他的update更新方法

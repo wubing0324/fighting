@@ -55,11 +55,11 @@ console.log(Object.keys(person));   // ['name', 'age']
 
 // for of
 
-es6 中添加的循环遍历语法；
-支持遍历数组，类数组对象（DOM NodeList），字符串，Map 对象，Set 对象；
-不支持遍历普通对象；
-遍历后输出的结果为数组元素的值；
-可搭配实例方法 entries()，同时输出数组的内容和索引；
+// es6 中添加的循环遍历语法；
+// 支持遍历数组，类数组对象（DOM NodeList），字符串，Map 对象，Set 对象；
+// 不支持遍历普通对象；
+// 遍历后输出的结果为数组元素的值；
+// 可搭配实例方法 entries()，同时输出数组的内容和索引；
 
 // 1. 不会遍历到对象属性及其原型属性
 Array.prototype.getLength = function() {

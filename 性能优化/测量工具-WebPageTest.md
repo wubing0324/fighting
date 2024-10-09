@@ -143,12 +143,6 @@ WebPagetest的核心是用于测量和分析网页的性能。它是 google 开�
 2. WebpageTest的关键指标：首字节时间（First Byte）、页面渲染时间(Start Render）、速度指数（Speed Index）、阻塞交互时间（Total Blocking Time）、文档加载完毕(Document Complete)、页面所有元素加载时间(Fully Loaded)
 3. 首字节加载时间 = DNS查找时间 + TCP连接时间 + SSL协商时间 + TTFB请求发送出去的时间
 
-## 最后
-
-文中如有错误，欢迎在评论区指正，如果这篇文章帮助到了你，欢迎点赞和关注。
-
-阅读更多优质文章，可以关注我的微信公众号【阳姐讲前端】，每天推送高质量文章，我们一起交流成长。
-
 ## 参考资料
 
 1. [Web性能优化工具WebPageTest（一）——总览与配置](https://zhuanlan.zhihu.com/p/45896011)

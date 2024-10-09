@@ -512,7 +512,7 @@ diff:
     }
 
     // 5. unknown sequence
-    // [i ... e1 + 1]:  a b [c d e]   f g
+    // [i ... e1 + 1]:  a b [c d e] f g
                      // 0 1  2 3 4  5 6
     // [i ... e2 + 1]:  a b [e c d h] f g
                      // 0 1  2 3 4 5  6  7

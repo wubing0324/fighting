@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul id="ulid"></ul>
+    <button id="grow">点击</button>
+    <div id="content"></div>
+<script>
+    class testObj{
+        constructor (name, age, sex) {
+            this.name = name
+            this.age = age
+            this.sex = sex
+        }
+    }
+
+    var x = [];
+    let content =document.getElementById('content')
+    var fragment = document.createDocumentFragment();
+    function grow() {
+        for (var i = 0; i < 10000; i++) {
+            fragment.appendChild(document.createElement('div'));
+            x.push(new testObj(23,32,'fdsfdsfdsfdsfdfs'))
+        }
+        content.appendChild(fragment)
+    }
+    document.getElementById('grow').addEventListener('click', grow);
+</script>
+</body>
+</html>

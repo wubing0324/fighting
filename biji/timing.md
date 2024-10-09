@@ -67,7 +67,9 @@ readyState
 loading —— 文档正在被加载。
 interactive —— 文档被全部读取。
 complete —— 文档被全部读取，并且所有资源（例如图片等）都已加载完成。
-
+>document.readyState和onload区别：
+主动检查：document.readyState === 'complete' 是通过主动查询属性值的方式来判断页面状态，可以在页面加载过程中任意时刻进行检查。
+函数监听：window.onload 是通过事件机制，页面加载完成后自动触发的事件回调。
 ---------------------------
 
 #### [web性能监控](http://www.alloyteam.com/2020/01/14184/#prettyPhoto)

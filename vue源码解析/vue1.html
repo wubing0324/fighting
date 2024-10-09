@@ -14,19 +14,25 @@
     <!-- <div v-else>{{ randomNum }}</div> -->
     <button @click="change">change</button>
     <button @click="toggle">toggle</button>
-    <!-- <button-counter></button-counter> -->
+    <button-counter :info="info"></button-counter>
     <ul>
       <li v-for="(item, index) in datalist">{{item}}</li>
     </ul>
   </div>
 <script>
   Vue.component('button-counter', {
+    props: {
+      info: {
+        type: Object,
+        default: () => {}
+      }
+    },
     data: function () {
       return {
         count: 0
       }
     },
-    template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>',
+    template: '<button v-on:click="count++">You clicked me {{ info }} times.</button>',
     mounted() {
       var self = this
       setTimeout(function(){
@@ -40,6 +46,9 @@
       message: 1,
       opsa: {
         a: 2
+      },
+      info: {
+        name: 2
       },
       randomNum: Math.random(),
       flag: true,
@@ -57,7 +66,8 @@
       var tt = this.message
       setInterval(() => {
         tt += 1
-        console.log(tt, this.message)
+        this.info.name++
+        console.log(tt, this.message, this.info)
       }, 2000)
     },
     methods: {

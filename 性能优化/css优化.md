@@ -72,7 +72,7 @@ https://web.dev/articles/reduce-the-scope-and-complexity-of-style-calculations?u
 2.尽可能减少 CSS 规则的数量，并移除未使用的 CSS 规则。
 3.如果您想进行复杂的渲染更改（例如动画），请在流程外执行此操作。您可以使用 position-absolute 或 position-fixed 来实现此目的。
 4.避免使用不必要且复杂的 CSS 选择器（尤其是后代选择器），因为此类选择器需要耗用更多的 CPU 处理能力来执行选择器匹配。
-5.content-visibility
+5.content-visibility(兼容性不是很好)
 https://www.cnblogs.com/coco1s/p/16373817.html
 + 在一些需要被频繁切换显示、隐藏状态的元素上，使用 content-visibility: hidden，用户代理无需重头开始渲染它和它的子元素，能有效的提升切换时的渲染性能；
 + content-visibility: auto 的作用更加类似于虚拟列表，使用它能极大的提升长列表、长文本页面的渲染性能；
@@ -101,3 +101,11 @@ auto：默认值，可让浏览器选择合适的优先级。
 </script>
 ```
 为图片设置尺寸，来避免布局偏移,免得加载界面后用户移动内容，图片此时加载好导致界面偏移
+
+
+##### 字体的优化
+1.放在cdn，在cdn和html不同域名的情况下，使用dns-prefetch和preconnect加速dns解析和建立连接
+2.使用preload提前加载字体资源
+3.字体子集：拆分首屏字体定义为单独的font-family：'first-fonts';（拆分工具：fontmin或者font-spider,通过字体子集，可以去掉无用的生僻字，减少字体文件大小），非首屏字体延迟加载。
+4.使用font-display: swap; 字体加载不阻塞html渲染，先使用默认字体，等字体加载完再替换
+5.缓存

@@ -1,6 +1,6 @@
 在没有命名空间的情况下，各个模块的state也是区分的，但是如果有同名的mutation，那么就会同时触发，这时候就要去设置namespace：true
 
-为什么要通过reduce方法去处理path数组呢，因为我们在访问模块的mutation/state的时候，是通过$store.state.moduleA.a去访问的，mutationg同理，所以需要将用户传入的options独享进行处理
+为什么要通过reduce方法去处理path数组呢，因为我们在访问模块的mutation/state的时候，是通过$store.state.moduleA.a去访问的，mutation同理，所以需要将用户传入的options进行处理
 
 流程：
 接收options创建store对象，通过minix混入beforecreate方法，在beforecreate方法中挂载store对象到每个vue组件中，最新版vuex是通过provide和usestore->inject注入到每个组件
