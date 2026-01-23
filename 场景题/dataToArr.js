@@ -9,83 +9,107 @@
  * koroFileheader VSCode插件
  * Copyright (c) 2021 by OBKoro1, All Rights Reserved.
  */
-const treeJson = require('./tree.json')
+const treeJson = require("./tree.json");
 // 源数据
 const list = [
+  {
+    id: 19,
+    parentId: 0,
+  },
+  {
+    id: 18,
+    parentId: 16,
+  },
+  {
+    id: 17,
+    parentId: 16,
+  },
+  {
+    id: 16,
+    parentId: 0,
+  },
+];
+
+// 转换后的数据结构
+
+const tree = {
+  id: 0,
+  children: [
     {
       id: 19,
       parentId: 0,
     },
     {
-      id: 18,
-      parentId: 16,
-    },
-    {
-      id: 17,
-      parentId: 16,
-    },
-    {
       id: 16,
       parentId: 0,
+      children: [
+        {
+          id: 18,
+          parentId: 16,
+        },
+        {
+          id: 17,
+          parentId: 16,
+        },
+      ],
     },
-    {
-        id: 20,
-        parentId: -1
-    }
-]
-  
-// 转换后的数据结构
-
-const tree = {
-    id: 0,
-    children: [
-      {
-        id: 19,
-        parentId: 0,
-      },
-      {
-        id: 16,
-        parentId: 0,
-        children: [
-  
-          {
-            id: 18,
-            parentId: 16,
-          },
-          {
-            id: 17,
-            parentId: 16,
-          },
-        ],
-      },
-    ],
-}
+  ],
+};
 
 const dataToTree = (source) => {
-    let src = {}
-    let tree = {}
-    for (let i = 0; i < source.length; i++) {
-        let id = source[i].id
-        src[id] = source[i]
-    }
+  let src = {};
+  let tree = {};
+  for (let i = 0; i < source.length; i++) {
+    let id = source[i].id;
+    src[id] = source[i];
+  }
 
-    Object.keys(src).forEach(id => {
-        let parentId = src[id].parentId
-        if (src[parentId]) {
-            src[parentId].children ? src[parentId].children.push(src[id]) : src[parentId].children = [src[id]]
-        } else {
-            if (tree[parentId]) {
-                tree[parentId].children.push(src[id])
-            } else {
-                tree[parentId] = {
-                    id: parentId,
-                    children: [src[id]],
-                    parent: null
-                }
-            }
-        }
-    })
-    console.log(JSON.stringify(tree, null, 4))
-    
+  Object.keys(src).forEach((id) => {
+    let parentId = src[id].parentId;
+    if (src[parentId]) {
+      src[parentId].children
+        ? src[parentId].children.push(src[id])
+        : (src[parentId].children = [src[id]]);
+    } else {
+      if (tree[parentId]) {
+        tree[parentId].children.push(src[id]);
+      } else {
+        tree[parentId] = {
+          id: parentId,
+          children: [src[id]],
+          parent: null,
+        };
+      }
+    }
+  });
+  console.log(JSON.stringify(tree, null, 4));
+};
+dataToTree(treeJson.data);
+
+function buildTreeOptimized(nodes) {
+  const nodeMap = new Map();
+  const tree = [];
+
+  // 存入 Map
+  nodes.forEach((node) => {
+    node.children = [];
+    nodeMap.set(node.id, node);
+  });
+
+  // 构建树
+  nodes.forEach((node) => {
+    if (node.parentId === null) {
+      tree.push(node);
+    } else {
+      const parent = nodeMap.get(node.parentId);
+      if (parent) {
+        parent.children.push(node);
+      }
+    }
+  });
+
+  return tree;
 }
-dataToTree(treeJson.data)
+
+const optimizedTree = buildTreeOptimized(data);
+console.log(JSON.stringify(optimizedTree, null, 2));

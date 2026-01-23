@@ -8,7 +8,7 @@
 解答：
 1.通过computedGetter将userDef包装一层，this.key1执行get的时候执行computedGetter，userDef被存储到watcher的getter中，computedGetter通过调用evaluate设置dirty属性来判断是否执行get->getter，当message变化的时候，改变dirty，这时执行this.key1，先会判断dirty的值，再去决定要不要进行重新计算
 2.通过将userDef包装一层，每次执行this.key1的时候，都会重新做依赖收集，如果message有变化，就会触发this.key1的get->pushTarget(当前的计算属性watcher)，如果key1没有用到，就会解绑key1对应watcher和其依赖（message）dep的绑定
-3.computed必须是同步不得，否则返回undefined，因为他并不是直接执行对应的函数
+3.computed必须是同步不的，否则返回undefined，因为他并不是直接执行对应的函数
 function () {
   getter() //所以异步不行
   return value
@@ -56,7 +56,18 @@ function defineComputed (
   // 当真正获取计算属性的值得时候，就会执行这个get（computedGetter）
   Object.defineProperty(target, key, sharedPropertyDefinition);
 }
-
+Watcher.prototype.update = function update () {
+  /* istanbul ignore else */
+  // 如果是计算属性的watcher,那么lazy是true,所以dirty=true,再次读取计算属性时,就会重新计算
+  if (this.lazy) {
+    this.dirty = true;
+  } else if (this.sync) {
+    // user watch立即执行,不等到下一次nexttick
+    this.run();
+  } else {
+    queueWatcher(this);
+  }
+};
 function createComputedGetter (key) {
   return function computedGetter () {
     var watcher = this._computedWatchers && this._computedWatchers[key];
@@ -100,7 +111,7 @@ watch和computed不同，不会重新进行依赖收集，message只要变化，
 + sync:message变化后，就执行userDef，不会放到下一次tick中
 
 watch是如何被依赖收集的？
-new Watcher()的时候，先执行parsePath，返回的所依赖属性的读取也就是getter，在this.get中先将当前的watcher激活，燃火执行getter，也就进行了依赖收集
+new Watcher()的时候，先执行parsePath，返回的所依赖属性的读取也就是getter，在this.get中先将当前的watcher激活，然后执行getter，也就进行了依赖收集
 ```javascript
 var Watcher = function Watcher (
     vm,

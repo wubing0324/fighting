@@ -86,3 +86,27 @@ initRender中获取这个值并赋值给vm.$slots，
 数据变化keep-alive触发patch->prepatch，keep-alive组件被forceUpdate，执行keepalive的render
 
 https://ustbhuangyi.github.io/vue-analysis/v2/extend/keep-alive.html#%E7%BB%84%E4%BB%B6%E6%B8%B2%E6%9F%93
+
+
+父组件更新生成新的 vnode 树
+keep-alive 的 render 函数执行
+根据组件名/key 在缓存中查找
+如果找到缓存：
+将缓存的组件实例赋值给新的 vnode
+新 vnode 虽然是新生成的，但其 componentInstance 是从缓存取的
+patch 过程中：
+发现是 keep-alive 的 vnode
+直接复用缓存的组件实例
+不会重新创建组件实例
+关键点在于：
+新 vnode 确实是新生成的
+但 keep-alive 通过缓存机制：
+保存了旧的组件实例
+将旧实例赋值给新的 vnode
+这样就实现了组件的缓存复用：
+DOM 结构可能更新
+但组件的状态（data、生命周期等）被保留
+这就是为什么你的例子中：
+A 组件的计数器能继续运行
+不会重新触发 mounted 等生命周期
+组件的状态得以保持

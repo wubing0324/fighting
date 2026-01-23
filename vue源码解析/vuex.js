@@ -15,7 +15,6 @@ function register(path, rootModule) {
 
   if (root) {
     let parentModule = path.slice(0, -1).reduce((module, path) => {
-      console.log(module, path)
       return module.children[path]
     }, root)
     parentModule.children[path[path.length - 1]] = rawModule

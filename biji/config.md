@@ -47,7 +47,7 @@ module.exports = {
   env: {
     browser: true,
     node: true,
-    es2021: true
+    es2021: true,
   },
   parser: "vue-eslint-parser",
   parserOptions: {
@@ -56,20 +56,20 @@ module.exports = {
     sourceType: "module",
     jsxPragma: "React",
     ecmaFeatures: {
-      jsx: true
-    }
+      jsx: true,
+    },
   },
   extends: [
     "plugin:vue/vue3-recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
   ],
   rules: {
     "vue/multi-word-component-names": "off",
     "@typescript-eslint/no-explicit-any": "off",
-    "vue/no-v-html": "off"
-  }
+    "vue/no-v-html": "off",
+  },
 };
 ```
 
@@ -90,7 +90,7 @@ module.exports = {
   bracketSpacing: true,
   bracketSameLine: false,
   arrowParens: "always",
-  endOfLine: "auto"
+  endOfLine: "auto",
 };
 ```
 
@@ -104,12 +104,12 @@ module.exports = {
     "stylelint-config-standard-scss",
     "stylelint-config-recommended-vue",
     "stylelint-config-recess-order",
-    "stylelint-prettier/recommended"
+    "stylelint-prettier/recommended",
   ],
   rules: {
     "selector-class-pattern": null,
-    "no-descending-specificity": null
-  }
+    "no-descending-specificity": null,
+  },
 };
 ```
 
@@ -181,3 +181,18 @@ pnpm lint
 ```
 
 这个命令会运行所有的代码检查工具并自动修复问题。
+
+多人协作中，这么要求其他人安装这些 vscode 插件呢？
+在 .vscode/extensions.json 中声明推荐的插件（Volar、Prettier、Stylelint 等）：
+
+```javascript
+{
+  "recommendations": [
+    "Vue.volar",
+    "stylelint.vscode-stylelint",
+    "esbenp.prettier-vscode"
+  ]
+}
+```
+
+2. 在 README.md 或 CONTRIBUTING.md 中明确要求

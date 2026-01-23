@@ -1,15 +1,9 @@
-var counter = 3;
-var obj = {a: 1}
-function incCounter() {
-  counter++;
-  obj.a++
-}
-function getCounter() {
-  return counter;
-}
+let count = 0;
+
+setInterval(() => {
+  console.log(count++);
+}, 1000);
+// 导出一个函数，返回动态变化的 count
 module.exports = {
-  counter: counter,
-  incCounter: incCounter,
-  getCounter: getCounter,
-  obj
+  getCount: () => count,
 };

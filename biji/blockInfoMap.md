@@ -1,4 +1,4 @@
-blockInfoMap是一个数组，每个item是一个对象，key是模块（module）本身，value是这个模块是u哦以来的模块，也是一个对象，又包含同步模块normalModule和异步模块block
+blockInfoMap 是一个数组，每个 item 是一个对象，key 是模块（module）本身，value 是这个模块是模块依赖的模块，也是一个对象，又包含同步模块 normalModule 和异步模块 block
 
 ```javascript
 0: {NormalModule => Object}
